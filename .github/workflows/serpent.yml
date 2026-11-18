@@ -1,0 +1,33 @@
+# Le serpent de l'emblème mange les contributions : génère serpent-sombre.svg et serpent-clair.svg
+# (couleurs Justasync) et les publie sur la branche « output », chaque jour et à chaque push.
+name: Serpent des contributions
+
+on:
+  schedule:
+    - cron: "17 4 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main, apercu]
+
+permissions:
+  contents: write
+
+jobs:
+  serpent:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: Platane/snk@v3
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          outputs: |
+            dist/serpent-sombre.svg?palette=github-dark&color_snake=#E6A23E&color_dots=#21262d,#3d3220,#6b5122,#a87a2c,#E6A23E
+            dist/serpent-clair.svg?palette=github-light&color_snake=#8C6A18&color_dots=#ebedf0,#efe0bd,#d9b26a,#b8862f,#8C6A18
+
+      - uses: crazy-max/ghaction-github-pages@v4
+        with:
+          target_branch: output
+          build_dir: dist
+          commit_message: "Mise à jour du serpent des contributions"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

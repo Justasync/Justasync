@@ -1,65 +1,87 @@
-<p align="center"><img src="assets/banner.png" alt="Justasync" width="100%"></p>
+<!-- Généré par outils/generer.py : modifier le script, pas ce fichier. -->
+<p align="center"><img src="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/banner.png" alt="Justasync" width="100%"></p>
 
-<h3 align="center">I build tools that make life simpler.</h3>
-<p align="center"><i>Je crée des outils qui simplifient la vie.</i></p>
+<p><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/entete-sombre.svg?v=26aba689"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/entete-clair.svg?v=f3d6a4bb"><img src="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/entete-sombre.svg?v=26aba689" alt="Christopher Cecilia Urra — I build tools that make life simpler. Je crée des outils qui simplifient la vie." width="100%"></picture></p>
 
-<p align="center">
-<img src="https://img.shields.io/badge/📍%20Anglet,%20France-1A1917?style=flat-square" alt="Anglet, France">
-<img src="https://img.shields.io/badge/Open%20to%20a%20dev%20internship-01%2F03%20→%2018%2F06%2F2027-E6A23E?style=flat-square&labelColor=1A1917" alt="Open to a development internship">
-<img src="https://img.shields.io/badge/ES%20·%20FR%20·%20EN%20(B2)-1A1917?style=flat-square" alt="ES · FR · EN">
-</p>
+<p><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/titre-apropos-sombre.svg?v=afa0b99d"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/titre-apropos-clair.svg?v=3fa9c84c"><img src="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/titre-apropos-sombre.svg?v=afa0b99d" alt="About me · À propos" width="100%"></picture></p>
 
-<p align="center"><img src="assets/veta.png" alt="" width="260"></p>
+- 🎓 3rd-year **BUT Informatique** (Computer Science) at the IUT of Bayonne and the Basque Country
+- 📡 **Telecommunications & Electronics Engineering** at CUJAE, Havana
+- 🔐 Passionate about **cybersecurity**, and I automate everything I can
+- 🏪 Founded **PRINTJAS** in Havana: printing and phone repair services
+- 🎨 I customize everything, from my dual-boot Linux/Windows PC to my own visual identity
+- 🥁 Drummer and singer in a **CROUS student band** that plays free concerts
+- 🌍 Spanish (native) · French (fluent) · English (B2)
 
-## 👋 About me
+<details>
+<summary><b>Read my full story</b></summary>
 
 Hi, I'm Christopher Cecilia Urra and I'm from Cuba. There I studied Telecommunications and Electronics Engineering at the Technological University of Havana "José Antonio Echeverría" (CUJAE), and I'm now in the third year of a three-year French Bachelor of Technology (BUT) in Computer Science at the IUT (University Institute of Technology) of Bayonne and the Basque Country. I'm very curious and I love building all kinds of things: JustSAE, an app to organize and track team projects; Paaxio, a platform that helps new artists get discovered; and now an AI agent for home automation. I'm passionate about cybersecurity and I automate everything I can: during my internship at Madaré, a communication agency in Toulouse, I built AuthMIA, which automated internal processes and checked web pages against their mockups. Back in Havana, I also ran my own business, PRINTJAS, offering printing and phone repair services. I love customizing my environment, from my dual-boot PC, Linux and Windows, set up just the way I like it, to my own visual identity. I speak Spanish (my native language), fluent French and English (B2 level, CEFR). Away from the screen, I'm the drummer and a singer in a student band from the CROUS (France's public student services) that plays free concerts. I'm currently looking for a development internship from March 1 to June 18, 2027, as part of my third year of the BUT.
 
+</details>
+
 <details>
-<summary>🇫🇷 À propos (Français)</summary>
+<summary><b>🇫🇷 Version française</b></summary>
 
 Bonjour, je suis Christopher Cecilia Urra et je viens de Cuba. J'y ai étudié l'ingénierie en télécommunications et électronique à l'Université technologique de La Havane "José Antonio Echeverría" (CUJAE), et je suis aujourd'hui en troisième année de BUT Informatique, un diplôme universitaire français en trois ans, à l'IUT (Institut universitaire de technologie) de Bayonne et du Pays basque. Je suis très curieux et j'aime créer toutes sortes de choses : JustSAE, une application pour organiser et suivre des projets en équipe ; Paaxio, une plateforme qui permet aux nouveaux artistes de se faire connaître ; et en ce moment, un agent d'IA pour la domotique. Je suis passionné de cybersécurité et j'automatise tout ce que je peux : pendant mon stage chez Madaré, une agence de communication à Toulouse, j'ai créé AuthMIA, qui automatisait des processus internes et vérifiait les pages par rapport à leurs maquettes. À La Havane, j'ai aussi eu ma propre entreprise, PRINTJAS, de services d'impression et de réparation de téléphones portables. J'adore personnaliser mon environnement, de mon PC en double démarrage (dual boot) Linux et Windows, configuré à mon goût, jusqu'à ma propre identité visuelle. Je parle espagnol (ma langue maternelle), français couramment et anglais (niveau B2 du cadre européen, CECRL). En dehors de l'écran, je suis batteur et chanteur dans un groupe d'étudiants du CROUS (l'organisme public de la vie étudiante en France) qui donne des concerts gratuits. Je recherche actuellement un stage en développement du 1er mars au 18 juin 2027, dans le cadre de ma troisième année de BUT.
 
 </details>
 
-<p align="center"><img src="assets/veta.png" alt="" width="260"></p>
+<p><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/titre-parcours-sombre.svg?v=f121d9d8"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/titre-parcours-clair.svg?v=a3e5362e"><img src="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/titre-parcours-sombre.svg?v=f121d9d8" alt="Journey · Parcours" width="100%"></picture></p>
 
-## 🛠️ Tech stack
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/parcours-sombre.svg?v=79774847"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/parcours-clair.svg?v=79ecc83a"><img src="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/parcours-sombre.svg?v=79774847" alt="Journey: 2017 CUJAE, Havana (Telecommunications &amp; Electronics Engineering) · 2018 Cristallerie de Saint-Louis (Automation internship · Hermès Group) · 2021 PRINTJAS, Havana (Founded my printing &amp; phone repair business) · 2024 IUT de Bayonne (BUT Informatique · Computer Science) · 2025 CROUS, Anglet (Student referent) · 2026 Madaré, Toulouse (Web developer internship · built AuthMIA) · 2027 Your team? (Development internship · 01/03 → 18/06)" width="100%"></picture></p>
+
+<p><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/titre-projets-sombre.svg?v=c8bd460b"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/titre-projets-clair.svg?v=a2b8344f"><img src="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/titre-projets-sombre.svg?v=c8bd460b" alt="Projects · Projets" width="100%"></picture></p>
 
 <p align="center">
-<img src="https://img.shields.io/badge/PHP-1A1917?style=for-the-badge&logo=php&logoColor=E6A23E" alt="PHP">
-<img src="https://img.shields.io/badge/Laravel-1A1917?style=for-the-badge&logo=laravel&logoColor=E6A23E" alt="Laravel">
-<img src="https://img.shields.io/badge/Angular-1A1917?style=for-the-badge&logo=angular&logoColor=E6A23E" alt="Angular">
-<img src="https://img.shields.io/badge/React-1A1917?style=for-the-badge&logo=react&logoColor=E6A23E" alt="React">
-<img src="https://img.shields.io/badge/JavaScript-1A1917?style=for-the-badge&logo=javascript&logoColor=E6A23E" alt="JavaScript">
-<img src="https://img.shields.io/badge/HTML-1A1917?style=for-the-badge&logo=html5&logoColor=E6A23E" alt="HTML">
-<img src="https://img.shields.io/badge/CSS-1A1917?style=for-the-badge&logo=css&logoColor=E6A23E" alt="CSS">
-<img src="https://img.shields.io/badge/SQL-1A1917?style=for-the-badge" alt="SQL">
-<img src="https://img.shields.io/badge/Java-1A1917?style=for-the-badge&logo=openjdk&logoColor=E6A23E" alt="Java">
-<img src="https://img.shields.io/badge/Python-1A1917?style=for-the-badge&logo=python&logoColor=E6A23E" alt="Python">
-<img src="https://img.shields.io/badge/C%2B%2B-1A1917?style=for-the-badge&logo=cplusplus&logoColor=E6A23E" alt="C++">
-<img src="https://img.shields.io/badge/C-1A1917?style=for-the-badge&logo=c&logoColor=E6A23E" alt="C">
-<img src="https://img.shields.io/badge/Docker-1A1917?style=for-the-badge&logo=docker&logoColor=E6A23E" alt="Docker">
-<img src="https://img.shields.io/badge/BPMN-1A1917?style=for-the-badge" alt="BPMN">
+<a href="https://justsae.cloud"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/projet-justsae-sombre.svg?v=cf05d04c"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/projet-justsae-clair.svg?v=033386b1"><img src="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/projet-justsae-sombre.svg?v=cf05d04c" alt="JustSAE — App to organize and track team projects: planning, Gantt charts and mind maps." width="49%"></picture></a>
+<a href="https://github.com/Justasync/SAEPaaxio"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/projet-paaxio-sombre.svg?v=2e388c63"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/projet-paaxio-clair.svg?v=60e068ba"><img src="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/projet-paaxio-sombre.svg?v=2e388c63" alt="Paaxio — Music platform where new artists can get discovered without competing with big names." width="49%"></picture></a>
+</p>
+<p align="center">
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/projet-authmia-sombre.svg?v=20f23171"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/projet-authmia-clair.svg?v=db7c5eaf"><img src="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/projet-authmia-sombre.svg?v=20f23171" alt="AuthMIA — Automates internal processes and checks production pages against their mockups." width="49%"></picture>
+<a href="https://github.com/Justasync/PokeBagarre_IUT"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/projet-pokebagarre-sombre.svg?v=913117e7"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/projet-pokebagarre-clair.svg?v=668ac657"><img src="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/projet-pokebagarre-sombre.svg?v=913117e7" alt="PokeBagarre — Java app used for software quality lab work, with unit tests." width="49%"></picture></a>
+</p>
+<p align="center">
+<a href="https://github.com/Justasync/SAE-Qt"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/projet-lecteurcd-sombre.svg?v=74424ac1"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/projet-lecteurcd-clair.svg?v=9d6bcf9a"><img src="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/projet-lecteurcd-sombre.svg?v=74424ac1" alt="CD player — Desktop CD player interface: play, next and previous, shuffle, repeat and volume." width="49%"></picture></a>
+<a href="https://www.linkedin.com/in/christopher-cecilia-urra-26a78722a/"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/projet-suivant-sombre.svg?v=52bb006e"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/projet-suivant-clair.svg?v=acd79e27"><img src="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/projet-suivant-sombre.svg?v=52bb006e" alt="Your team? Development internship 01/03 → 18/06/2027" width="49%"></picture></a>
 </p>
 
-<p align="center"><img src="assets/veta.png" alt="" width="260"></p>
+<p><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/titre-technos-sombre.svg?v=9c871d23"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/titre-technos-clair.svg?v=43b0481f"><img src="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/titre-technos-sombre.svg?v=9c871d23" alt="Tech stack · Compétences techniques" width="100%"></picture></p>
 
-## 🚀 Projects
+<p align="center"><sub><b>WEB</b></sub><br>
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/PHP-262420?style=for-the-badge&logo=php&logoColor=E6A23E"><source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/PHP-FFFFFF?style=for-the-badge&logo=php&logoColor=8C6A18"><img src="https://img.shields.io/badge/PHP-262420?style=for-the-badge&logo=php&logoColor=E6A23E" alt="PHP"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/Laravel-262420?style=for-the-badge&logo=laravel&logoColor=E6A23E"><source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/Laravel-FFFFFF?style=for-the-badge&logo=laravel&logoColor=8C6A18"><img src="https://img.shields.io/badge/Laravel-262420?style=for-the-badge&logo=laravel&logoColor=E6A23E" alt="Laravel"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/Angular-262420?style=for-the-badge&logo=angular&logoColor=E6A23E"><source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/Angular-FFFFFF?style=for-the-badge&logo=angular&logoColor=8C6A18"><img src="https://img.shields.io/badge/Angular-262420?style=for-the-badge&logo=angular&logoColor=E6A23E" alt="Angular"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/React-262420?style=for-the-badge&logo=react&logoColor=E6A23E"><source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/React-FFFFFF?style=for-the-badge&logo=react&logoColor=8C6A18"><img src="https://img.shields.io/badge/React-262420?style=for-the-badge&logo=react&logoColor=E6A23E" alt="React"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/JavaScript-262420?style=for-the-badge&logo=javascript&logoColor=E6A23E"><source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/JavaScript-FFFFFF?style=for-the-badge&logo=javascript&logoColor=8C6A18"><img src="https://img.shields.io/badge/JavaScript-262420?style=for-the-badge&logo=javascript&logoColor=E6A23E" alt="JavaScript"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/HTML-262420?style=for-the-badge&logo=html5&logoColor=E6A23E"><source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/HTML-FFFFFF?style=for-the-badge&logo=html5&logoColor=8C6A18"><img src="https://img.shields.io/badge/HTML-262420?style=for-the-badge&logo=html5&logoColor=E6A23E" alt="HTML"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/CSS-262420?style=for-the-badge&logo=css&logoColor=E6A23E"><source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/CSS-FFFFFF?style=for-the-badge&logo=css&logoColor=8C6A18"><img src="https://img.shields.io/badge/CSS-262420?style=for-the-badge&logo=css&logoColor=E6A23E" alt="CSS"></picture>
+</p>
+<p align="center"><sub><b>LANGUAGES</b></sub><br>
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/Java-262420?style=for-the-badge&logo=openjdk&logoColor=E6A23E"><source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/Java-FFFFFF?style=for-the-badge&logo=openjdk&logoColor=8C6A18"><img src="https://img.shields.io/badge/Java-262420?style=for-the-badge&logo=openjdk&logoColor=E6A23E" alt="Java"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/Python-262420?style=for-the-badge&logo=python&logoColor=E6A23E"><source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/Python-FFFFFF?style=for-the-badge&logo=python&logoColor=8C6A18"><img src="https://img.shields.io/badge/Python-262420?style=for-the-badge&logo=python&logoColor=E6A23E" alt="Python"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/C%2B%2B-262420?style=for-the-badge&logo=cplusplus&logoColor=E6A23E"><source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/C%2B%2B-FFFFFF?style=for-the-badge&logo=cplusplus&logoColor=8C6A18"><img src="https://img.shields.io/badge/C%2B%2B-262420?style=for-the-badge&logo=cplusplus&logoColor=E6A23E" alt="C++"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/C-262420?style=for-the-badge&logo=c&logoColor=E6A23E"><source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/C-FFFFFF?style=for-the-badge&logo=c&logoColor=8C6A18"><img src="https://img.shields.io/badge/C-262420?style=for-the-badge&logo=c&logoColor=E6A23E" alt="C"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/SQL-262420?style=for-the-badge"><source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/SQL-FFFFFF?style=for-the-badge"><img src="https://img.shields.io/badge/SQL-262420?style=for-the-badge" alt="SQL"></picture>
+</p>
+<p align="center"><sub><b>TOOLS &amp; METHODS</b></sub><br>
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/Docker-262420?style=for-the-badge&logo=docker&logoColor=E6A23E"><source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/Docker-FFFFFF?style=for-the-badge&logo=docker&logoColor=8C6A18"><img src="https://img.shields.io/badge/Docker-262420?style=for-the-badge&logo=docker&logoColor=E6A23E" alt="Docker"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/BPMN-262420?style=for-the-badge"><source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/BPMN-FFFFFF?style=for-the-badge"><img src="https://img.shields.io/badge/BPMN-262420?style=for-the-badge" alt="BPMN"></picture>
+</p>
 
-| Project | What it is | Stack |
-|---|---|---|
-| **[JustSAE](https://justsae.cloud)** | App to organize and track team projects | JavaScript · HTML · CSS |
-| **[Paaxio](https://github.com/Justasync/SAEPaaxio)** | Platform that helps new artists get discovered (IUT team project, 7 students) | PHP · Twig · JavaScript |
-| **AuthMIA** | Internship at Madaré (Toulouse): automates internal processes and checks production pages against their mockups | — |
-| **[PokeBagarre](https://github.com/Justasync/PokeBagarre_IUT)** | IUT software quality lab with unit tests | Java · Gradle |
-| **[CD player](https://github.com/Justasync/SAE-Qt)** | Desktop CD player interface (play, shuffle, repeat, volume) | C++ · Qt |
-| **[ChatBot](https://github.com/Justasync/ChatBot)** | "The worst virtual assistant in the world": answers in French with absurd replies, using the Gemini API | PHP · JavaScript |
-
-<p align="center"><img src="assets/veta.png" alt="" width="260"></p>
+<p><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/titre-activite-sombre.svg?v=0302c48f"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/titre-activite-clair.svg?v=117c6eb9"><img src="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/titre-activite-sombre.svg?v=0302c48f" alt="Activity · Activité" width="100%"></picture></p>
 
 <p align="center">
-<a href="https://www.linkedin.com/in/christopher-cecilia-urra-26a78722a/"><img src="https://img.shields.io/badge/LinkedIn-1A1917?style=for-the-badge&logo=linkedin&logoColor=E6A23E" alt="LinkedIn"></a>
-<a href="https://x.com/Justasync01"><img src="https://img.shields.io/badge/X-1A1917?style=for-the-badge&logo=x&logoColor=E6A23E" alt="X"></a>
-<a href="https://www.instagram.com/justasync/"><img src="https://img.shields.io/badge/Instagram-1A1917?style=for-the-badge&logo=instagram&logoColor=E6A23E" alt="Instagram"></a>
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/output/serpent-sombre.svg">
+<source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/output/serpent-clair.svg">
+<img src="https://raw.githubusercontent.com/Justasync/Justasync/output/serpent-sombre.svg" alt="The snake from my emblem eating my GitHub contributions" width="100%"></picture>
+</p>
+<p align="center"><sub><i>The snake from my emblem, eating my contributions · Le serpent de mon emblème mange mes contributions</i></sub></p>
+
+<p><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/pied-sombre.svg?v=d540e7f4"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/pied-clair.svg?v=d8d6d6c8"><img src="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/pied-sombre.svg?v=d540e7f4" alt="Justasync — Christopher Cecilia Urra · Anglet, France" width="100%"></picture></p>
+
+<p align="center">
+<a href="https://www.linkedin.com/in/christopher-cecilia-urra-26a78722a/"><picture><source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/LinkedIn-262420?style=for-the-badge&logo=linkedin&logoColor=E6A23E"><source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/LinkedIn-FFFFFF?style=for-the-badge&logo=linkedin&logoColor=8C6A18"><img src="https://img.shields.io/badge/LinkedIn-262420?style=for-the-badge&logo=linkedin&logoColor=E6A23E" alt="LinkedIn"></picture></a>
+<a href="https://x.com/Justasync01"><picture><source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/X-262420?style=for-the-badge&logo=x&logoColor=E6A23E"><source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/X-FFFFFF?style=for-the-badge&logo=x&logoColor=8C6A18"><img src="https://img.shields.io/badge/X-262420?style=for-the-badge&logo=x&logoColor=E6A23E" alt="X"></picture></a>
+<a href="https://www.instagram.com/justasync/"><picture><source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/Instagram-262420?style=for-the-badge&logo=instagram&logoColor=E6A23E"><source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/Instagram-FFFFFF?style=for-the-badge&logo=instagram&logoColor=8C6A18"><img src="https://img.shields.io/badge/Instagram-262420?style=for-the-badge&logo=instagram&logoColor=E6A23E" alt="Instagram"></picture></a>
 </p>
