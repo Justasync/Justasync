@@ -49,9 +49,9 @@ Bonjour, je suis Christopher Cecilia Urra et je viens de Cuba. J'y ai étudié l
 
 | Project | What it is | Stack |
 |---|---|---|
-| **[JustSAE](https://justsae.cloud)** | App to organize and track team projects | |
+| **[JustSAE](https://justsae.cloud)** | App to organize and track team projects | JavaScript · HTML · CSS |
 | **[Paaxio](https://github.com/Justasync/SAEPaaxio)** | Platform that helps new artists get discovered (IUT team project, 7 students) | PHP · Twig · JavaScript |
-| **AuthMIA** | Internship at Madaré (Toulouse): automates internal processes and checks production pages against their mockups | |
+| **AuthMIA** | Internship at Madaré (Toulouse): automates internal processes and checks production pages against their mockups | — |
 | **[PokeBagarre](https://github.com/Justasync/PokeBagarre_IUT)** | IUT software quality lab with unit tests | Java · Gradle |
 | **[CD player](https://github.com/Justasync/SAE-Qt)** | Desktop CD player interface (play, shuffle, repeat, volume) | C++ · Qt |
 | **[ChatBot](https://github.com/Justasync/ChatBot)** | "The worst virtual assistant in the world": answers in French with absurd replies, using the Gemini API | PHP · JavaScript |
