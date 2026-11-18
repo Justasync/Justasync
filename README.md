@@ -1,0 +1,16 @@
+<p align="center"><img src="assets/banner.png" alt="Justasync" width="100%"></p>
+
+## 🇬🇧 English
+
+Hi, I'm Christopher Cecilia Urra and I'm from Cuba. There I studied Telecommunications and Electronics Engineering at the Technological University of Havana "José Antonio Echeverría" (CUJAE), and I'm now in the third year of a three-year French Bachelor of Technology (BUT) in Computer Science at the IUT (University Institute of Technology) of Bayonne and the Basque Country. I'm very curious and I love building all kinds of things: JustSAE, an app to organize and track team projects; Paaxio, a platform that helps new artists get discovered; and now an AI agent for home automation. I'm passionate about cybersecurity and I automate everything I can: during my internship at Madaré, a communication agency in Toulouse, I built AuthMIA, which automated internal processes and checked web pages against their mockups. Back in Havana, I also ran my own business, PRINTJAS, offering printing and phone repair services. I love customizing my environment, from my dual-boot PC, Linux and Windows, set up just the way I like it, to my own visual identity. I speak Spanish (my native language), fluent French and English (B2 level, CEFR). Away from the screen, I'm the drummer and a singer in a student band from the CROUS (France's public student services) that plays free concerts. I'm currently looking for a development internship from March 1 to June 18, 2027, as part of my third year of the BUT.
+
+<details>
+<summary>🇫🇷 Français</summary>
+
+Bonjour, je suis Christopher Cecilia Urra et je viens de Cuba. J'y ai étudié l'ingénierie en télécommunications et électronique à l'Université technologique de La Havane "José Antonio Echeverría" (CUJAE), et je suis aujourd'hui en troisième année de BUT Informatique, un diplôme universitaire français en trois ans, à l'IUT (Institut universitaire de technologie) de Bayonne et du Pays basque. Je suis très curieux et j'aime créer toutes sortes de choses : JustSAE, une application pour organiser et suivre des projets en équipe ; Paaxio, une plateforme qui permet aux nouveaux artistes de se faire connaître ; et en ce moment, un agent d'IA pour la domotique. Je suis passionné de cybersécurité et j'automatise tout ce que je peux : pendant mon stage chez Madaré, une agence de communication à Toulouse, j'ai créé AuthMIA, qui automatisait des processus internes et vérifiait les pages par rapport à leurs maquettes. À La Havane, j'ai aussi eu ma propre entreprise, PRINTJAS, de services d'impression et de réparation de téléphones portables. J'adore personnaliser mon environnement, de mon PC en double démarrage (dual boot) Linux et Windows, configuré à mon goût, jusqu'à ma propre identité visuelle. Je parle espagnol (ma langue maternelle), français couramment et anglais (niveau B2 du cadre européen, CECRL). En dehors de l'écran, je suis batteur et chanteur dans un groupe d'étudiants du CROUS (l'organisme public de la vie étudiante en France) qui donne des concerts gratuits. Je recherche actuellement un stage en développement du 1er mars au 18 juin 2027, dans le cadre de ma troisième année de BUT.
+
+</details>
+
+---
+
+[LinkedIn](https://www.linkedin.com/in/christopher-cecilia-urra-26a78722a/) · [X](https://x.com/Justasync01) · [Instagram](https://www.instagram.com/justasync/)
