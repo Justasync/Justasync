@@ -24,7 +24,7 @@ jobs:
             dist/serpent-sombre.svg?palette=github-dark&color_snake=#E6A23E&color_dots=#21262d,#3d3220,#6b5122,#a87a2c,#E6A23E
             dist/serpent-clair.svg?palette=github-light&color_snake=#8C6A18&color_dots=#ebedf0,#efe0bd,#d9b26a,#b8862f,#8C6A18
 
-      - uses: crazy-max/ghaction-github-pages@v4
+      - uses: crazy-max/ghaction-github-pages@v5
         with:
           target_branch: output
           build_dir: dist
