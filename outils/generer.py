@@ -50,7 +50,7 @@ def octets_police(fam):
     """Police complète (instanciée si variable), gardée en mémoire sous forme d'octets."""
     if fam not in _octets:
         chemin, axes = POLICES[fam]
-        f = TTFont(chemin)
+        f = TTFont(chemin, recalcTimestamp=False)  # même date à chaque génération : fichiers identiques
         if axes:
             f = instancer.instantiateVariableFont(f, axes)
         b = io.BytesIO()
@@ -91,7 +91,7 @@ def couper(txt, fam, taille, largeur_max):
 
 def css_police(fam, texte):
     """@font-face avec un sous-ensemble WOFF de la police, limité aux caractères utilisés."""
-    f = TTFont(io.BytesIO(octets_police(fam)))
+    f = TTFont(io.BytesIO(octets_police(fam)), recalcTimestamp=False)
     opts = subset.Options()
     opts.flavor = "woff"
     opts.layout_features = ["kern"] if fam.startswith("JaCode") else ["kern", "liga", "calt"]
@@ -392,6 +392,18 @@ PROJETS = [  # (fichier, étiquette, titre, description, technos, lien)
 ]
 LINKEDIN = "https://www.linkedin.com/in/christopher-cecilia-urra-26a78722a/"
 
+FICHE = [  # (icône Nerd Font, clé, valeur) — mêmes infos que l'ancienne liste « About me »
+    ("\U000f0474", "study", "BUT Informatique, 3rd year · IUT de Bayonne"),
+    ("\U000f1119", "degree", "Telecom & Electronics Engineering · CUJAE"),
+    ("\U000f099d", "into", "Cybersecurity · automating everything I can"),
+    ("\U000f04dc", "founded", "PRINTJAS, Havana · printing & phone repair"),
+    ("\U000f03d8", "custom", "Everything: my Linux/Windows PC, my own brand"),
+    ("\uee32", "music", "Drums & vocals · CROUS student band"),
+    ("\U000f05ca", "speaks", "Spanish (native) · French (fluent) · English (B2)"),
+    ("\U000f00d6", "seeking", "Dev internship · 01/03 → 18/06/2027"),
+]
+PALETTE = ["#1A1917", "#F2A04C", "#D9BC6A", "#EAE8DC", "#74AFC0"]  # couleurs de la marque
+
 SECTIONS = {  # numéro, titre EN, titre FR
     "apropos": ("01", "About me", "À PROPOS"),
     "parcours": ("02", "Journey", "PARCOURS"),
@@ -589,6 +601,64 @@ def carte_appel(theme):
     return s.rendu()
 
 
+def embleme_colore(couleur, taille):
+    """Emblème officiel d'une couleur (PNG avec transparence) recoloré, en data URI."""
+    from PIL import Image
+    im = Image.open(IDENTITE / "logo/aplicado/emblema_un_color_crema.png").convert("RGBA")
+    im = im.crop(im.getbbox()).resize((taille, taille), Image.LANCZOS)
+    plein = Image.new("RGBA", im.size, couleur)
+    plein.putalpha(im.split()[3])
+    b = io.BytesIO()
+    plein.save(b, "PNG", optimize=True)
+    return "data:image/png;base64," + base64.b64encode(b.getvalue()).decode()
+
+
+def fiche(theme):
+    """« About me » façon fastfetch : mon invite Starship, l'emblème et des lignes clé / valeur."""
+    alt = "christopher@justasync — " + " · ".join(f"{k}: {v}" for _, k, v in FICHE)
+    s = Svg(1000, 430, theme, alt)
+    th, c = s.th, s.corps
+    s.scene(komorebi_x=.05, intensite=.8)
+    # emblème
+    c.append(f'<image x="52" y="88" width="236" height="236" href="{embleme_colore(th["oro"], 708)}"/>')
+    # invite Starship : îlot or (Fedora + utilisateur), îlot bleu-vert (dossier), ❯ ambre
+    x, y, h = 334, 40, 28
+    l1 = mesure(" christopher", "JaCodeM", 13.5) + 46
+    l2 = mesure("~", "JaCodeM", 13.5) + 24
+    c.append(f'<path d="M{x + h / 2} {y}H{x + l1}V{y + h}H{x + h / 2}A{h / 2} {h / 2} 0 0 1 {x + h / 2} {y}Z" fill="{th["oro"]}"/>')
+    c.append(s.texte(x + 11, y + 21, "\uf30a", "JaCode", 19, th["fond"]))
+    c.append(s.texte(x + 32, y + 19, " christopher", "JaCodeM", 13.5, th["fond"]))
+    c.append(f'<path d="M{x + l1} {y}H{x + l1 + l2 - h / 2}A{h / 2} {h / 2} 0 0 1 {x + l1 + l2 - h / 2} {y + h}H{x + l1}Z" fill="{th["az"]}"/>')
+    c.append(s.texte(x + l1 + 11, y + 19, "~", "JaCodeM", 13.5, th["fond"]))
+    xp = x + l1 + l2 + 12
+    c.append(s.texte(xp, y + 20, "\u276f", "JaCodeM", 17, th["ac"]))
+    c.append(s.texte(xp + 22, y + 19.5, "fastfetch", "JaCode", 16, th["texte"]))
+    # titre + veta
+    c.append(s.texte(x, 112, "christopher", "JaCodeM", 22, th["oro"]))
+    lt = mesure("christopher", "JaCodeM", 22)
+    c.append(s.texte(x + lt, 112, "@", "JaCodeM", 22, th["doux"]))
+    c.append(s.texte(x + lt + mesure("@", "JaCodeM", 22), 112, "justasync", "JaCodeM", 22, th["oro"]))
+    s.veta(61, x, 130, 952, 130, 1.4, ramas=0, delai=.5, duree=1.4, periode=10,
+           delai_reflet=2.2, amplitude=2)
+    # lignes clé / valeur, qui s'affichent l'une après l'autre
+    s.css.append("@keyframes ligne{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:none}}")
+    for i, (icone, cle, valeur) in enumerate(FICHE):
+        yy = 164 + i * 28.5
+        idl = s.id("l")
+        s.css.append(f".{idl}{{animation:ligne .5s {COURBE} {.9 + i * .12:.2f}s both}}")
+        c.append(f'<g class="{idl}">' + s.texte(x - 1, yy + 2, icone, "JaCode", 21, th["az"])
+                 + s.texte(x + 28, yy, cle, "JaCodeM", 15, th["az"])
+                 + s.texte(x + 120, yy, valeur, "JaCode", 15, th["texte"]) + "</g>")
+    # palette, comme le module « colors » de fastfetch
+    idp = s.id("l")
+    s.css.append(f".{idp}{{animation:ligne .5s {COURBE} {.9 + len(FICHE) * .12:.2f}s both}}")
+    pastilles = "".join(f'<circle cx="{x + 9 + k * 26}" cy="400" r="8" fill="{coul}" stroke="{th["bord"]}"/>'
+                        for k, coul in enumerate(PALETTE))
+    c.append(f'<g class="{idp}">{pastilles}</g>')
+    s.fin_scene()
+    return s.rendu()
+
+
 def pied(theme):
     s = Svg(1000, 210, theme, "Justasync — Christopher Cecilia Urra · Anglet, France")
     th, c = s.th, s.corps
@@ -649,6 +719,7 @@ def main():
     for i, p in enumerate(PROJETS):
         pieces(f"projet-{p[0]}", lambda th, p=p, i=i: carte(p, th, i))
     pieces("projet-suivant", carte_appel)
+    pieces("fiche", fiche)
     pieces("pied", pied)
 
     def image(nom, alt, largeur="100%"):
@@ -703,13 +774,7 @@ def main():
 
 {titre("apropos")}
 
-- 🎓 3rd-year **BUT Informatique** (Computer Science) at the IUT of Bayonne and the Basque Country
-- 📡 **Telecommunications & Electronics Engineering** at CUJAE, Havana
-- 🔐 Passionate about **cybersecurity**, and I automate everything I can
-- 🏪 Founded **PRINTJAS** in Havana: printing and phone repair services
-- 🎨 I customize everything, from my dual-boot Linux/Windows PC to my own visual identity
-- 🥁 Drummer and singer in a **CROUS student band** that plays free concerts
-- 🌍 Spanish (native) · French (fluent) · English (B2)
+<p>{image("fiche", "christopher@justasync — " + " · ".join(f"{k}: {v}" for _, k, v in FICHE))}</p>
 
 <details>
 <summary><b>Read my full story</b></summary>
