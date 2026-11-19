@@ -69,15 +69,6 @@ Bonjour, je suis Christopher Cecilia Urra et je viens de Cuba. J'y ai étudié l
 <picture><source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/BPMN-262420?style=for-the-badge"><source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/BPMN-FFFFFF?style=for-the-badge"><img src="https://img.shields.io/badge/BPMN-262420?style=for-the-badge" alt="BPMN"></picture>
 </p>
 
-<p><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/titre-activite-sombre.svg?v=0302c48f"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/titre-activite-clair.svg?v=117c6eb9"><img src="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/titre-activite-sombre.svg?v=0302c48f" alt="Activity · Activité" width="100%"></picture></p>
-
-<p align="center">
-<picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/output/serpent-sombre.svg">
-<source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/output/serpent-clair.svg">
-<img src="https://raw.githubusercontent.com/Justasync/Justasync/output/serpent-sombre.svg" alt="The snake from my emblem eating my GitHub contributions" width="100%"></picture>
-</p>
-<p align="center"><sub><i>The snake from my emblem, eating my contributions · Le serpent de mon emblème mange mes contributions</i></sub></p>
-
 <p><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/pied-sombre.svg?v=d540e7f4"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/pied-clair.svg?v=d8d6d6c8"><img src="https://raw.githubusercontent.com/Justasync/Justasync/apercu/assets/pied-sombre.svg?v=d540e7f4" alt="Justasync — Christopher Cecilia Urra · Anglet, France" width="100%"></picture></p>
 
 <p align="center">

@@ -397,7 +397,6 @@ SECTIONS = {  # numéro, titre EN, titre FR
     "parcours": ("02", "Journey", "PARCOURS"),
     "projets": ("03", "Projects", "PROJETS"),
     "technos": ("04", "Tech stack", "COMPÉTENCES TECHNIQUES"),
-    "activite": ("05", "Activity", "ACTIVITÉ"),
 }
 
 TECHNOS = [  # groupes : (titre, [(nom, logo simple-icons)]) — compétences techniques du CV
@@ -499,7 +498,7 @@ def titre_section(cle, theme):
     c.append(s.texte(38, 54, en, "JaTitreM", 32, th["texte"]))
     l = mesure(en, "JaTitreM", 32)
     c.append(s.texte(38 + l + 16, 52, fr, "JaCodeM", 12.5, th["doux"], espacement=2.4))
-    graine = {"apropos": 3, "parcours": 5, "projets": 7, "technos": 9, "activite": 13}[cle]
+    graine = {"apropos": 3, "parcours": 5, "projets": 7, "technos": 9}[cle]
     s.veta(graine, 2, 74, 998, 74, 1.5, ramas=1, longueur_rama=30, duree=1.6, periode=10,
            delai_reflet=1.8 + graine * .3, amplitude=4)
     return s.rendu()
@@ -690,7 +689,6 @@ def main():
             f'<img src="{badge(n, l, "sombre")}" alt="{esc(n)}"></picture>' for n, l in liste)
         groupes.append(f'<p align="center"><sub><b>{esc(nom_groupe)}</b></sub><br>\n{badges}\n</p>')
 
-    serpent = f"https://raw.githubusercontent.com/{DEPOT}/output"
     social = "\n".join(
         f'<a href="{u}"><picture><source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/{n}-262420?style=for-the-badge&logo={l}&logoColor=E6A23E">'
         f'<source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/{n}-FFFFFF?style=for-the-badge&logo={l}&logoColor=8C6A18">'
@@ -738,15 +736,6 @@ def main():
 {titre("technos")}
 
 {chr(10).join(groupes)}
-
-{titre("activite")}
-
-<p align="center">
-<picture><source media="(prefers-color-scheme: dark)" srcset="{serpent}/serpent-sombre.svg">
-<source media="(prefers-color-scheme: light)" srcset="{serpent}/serpent-clair.svg">
-<img src="{serpent}/serpent-sombre.svg" alt="The snake from my emblem eating my GitHub contributions" width="100%"></picture>
-</p>
-<p align="center"><sub><i>The snake from my emblem, eating my contributions · Le serpent de mon emblème mange mes contributions</i></sub></p>
 
 <p>{image("pied", "Justasync — Christopher Cecilia Urra · Anglet, France")}</p>
 
