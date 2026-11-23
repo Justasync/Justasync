@@ -1,0 +1,44 @@
+name: Actualiser le profil
+
+# Chaque jour : données publiques (GitHub, Last.fm) → images SVG et README.
+# Commit seulement si quelque chose a changé.
+on:
+  schedule:
+    - cron: "17 5 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: actualiser
+  cancel-in-progress: false
+
+jobs:
+  actualiser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - run: pip install fonttools pillow
+      - name: Données publiques
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LASTFM_API_KEY: ${{ secrets.LASTFM_API_KEY }}
+          LASTFM_USER: ${{ vars.LASTFM_USER }}
+        run: python3 outils/actualiser.py
+      - name: Images et README
+        run: python3 outils/generer.py --branche "${{ github.ref_name }}"
+      - name: Commit si quelque chose a changé
+        run: |
+          git add -A README.md assets outils/donnees
+          if git diff --cached --quiet; then
+            echo "Rien de nouveau."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "Profil : mise à jour automatique"
+            git push
+          fi

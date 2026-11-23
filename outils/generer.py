@@ -5,17 +5,24 @@ Tout vient de l'identité Justasync : couleurs de tokens/web.css, polices Fraunc
 Source Sans 3 et JetBrains Mono (intégrées en sous-ensemble dans chaque SVG) et la veta
 (fissure kintsugi) de tokens/movimiento.js, portée ici en Python.
 
+Les données « vivantes » (GitHub public, Last.fm) viennent de outils/donnees/vivant.json,
+écrit par outils/actualiser.py. Sur mon PC, les polices, l'emblème et voz.md sont copiés dans
+outils/ à chaque génération, pour que l'Action GitHub (qui n'a pas mon PC) produise la même chose.
+
 Usage : python3 outils/generer.py [--branche main] [--apercu]
   --branche  branche GitHub utilisée dans les liens des images (main par défaut)
   --apercu   écrit aussi apercu-sombre.html / apercu-clair.html pour vérifier en local
 """
 import argparse
 import base64
+import datetime as dt
 import hashlib
 import html
 import io
+import json
 import math
 import pathlib
+import shutil
 from collections import defaultdict
 
 from fontTools import subset
@@ -24,21 +31,32 @@ from fontTools.varLib import instancer
 
 RACINE = pathlib.Path(__file__).resolve().parent.parent
 ASSETS = RACINE / "assets"
+OUTILS = RACINE / "outils"
 IDENTITE = pathlib.Path.home() / "Documents/identidad"
+FONTES = pathlib.Path.home() / ".local/share/fonts"
+SOURCE_SANS = pathlib.Path("/usr/share/fonts/adobe-source-sans-pro-fonts")
+
+
+def source(original, nom):
+    """Fichier de mon PC s'il existe (copié dans outils/ quand il change), sinon la copie du dépôt."""
+    copie = OUTILS / nom
+    if original.exists():
+        if not copie.exists() or copie.read_bytes() != original.read_bytes():
+            copie.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(original, copie)
+    return copie
 UTILISATEUR = "Justasync"
 DEPOT = "Justasync/Justasync"
 
 # ---------------------------------------------------------------- polices
-POLICES = {
-    "JaTitre": (pathlib.Path.home() / ".local/share/fonts/fraunces/Fraunces-variable.ttf",
-                {"opsz": 56, "wght": 600, "SOFT": 0, "WONK": 0}),
-    "JaTitreM": (pathlib.Path.home() / ".local/share/fonts/fraunces/Fraunces-variable.ttf",
-                 {"opsz": 30, "wght": 600, "SOFT": 0, "WONK": 0}),
-    "JaTexte": (pathlib.Path("/usr/share/fonts/adobe-source-sans-pro-fonts/SourceSans3-Regular.otf"), None),
-    "JaTexteG": (pathlib.Path("/usr/share/fonts/adobe-source-sans-pro-fonts/SourceSans3-Semibold.otf"), None),
-    "JaTexteI": (pathlib.Path("/usr/share/fonts/adobe-source-sans-pro-fonts/SourceSans3-It.otf"), None),
-    "JaCode": (pathlib.Path.home() / ".local/share/fonts/JetBrainsMonoNerd/JetBrainsMonoNerdFontMono-Regular.ttf", None),
-    "JaCodeM": (pathlib.Path.home() / ".local/share/fonts/JetBrainsMonoNerd/JetBrainsMonoNerdFontMono-Medium.ttf", None),
+POLICES = {  # polices libres (OFL), copiées dans outils/polices/
+    "JaTitre": (FONTES / "fraunces/Fraunces-variable.ttf", {"opsz": 56, "wght": 600, "SOFT": 0, "WONK": 0}),
+    "JaTitreM": (FONTES / "fraunces/Fraunces-variable.ttf", {"opsz": 30, "wght": 600, "SOFT": 0, "WONK": 0}),
+    "JaTexte": (SOURCE_SANS / "SourceSans3-Regular.otf", None),
+    "JaTexteG": (SOURCE_SANS / "SourceSans3-Semibold.otf", None),
+    "JaTexteI": (SOURCE_SANS / "SourceSans3-It.otf", None),
+    "JaCode": (FONTES / "JetBrainsMonoNerd/JetBrainsMonoNerdFontMono-Regular.ttf", None),
+    "JaCodeM": (FONTES / "JetBrainsMonoNerd/JetBrainsMonoNerdFontMono-Medium.ttf", None),
 }
 SECOURS = {"JaTitre": "Georgia, serif", "JaTitreM": "Georgia, serif", "JaTexte": "system-ui, sans-serif",
            "JaTexteG": "system-ui, sans-serif", "JaTexteI": "system-ui, sans-serif",
@@ -50,7 +68,7 @@ def octets_police(fam):
     """Police complète (instanciée si variable), gardée en mémoire sous forme d'octets."""
     if fam not in _octets:
         chemin, axes = POLICES[fam]
-        f = TTFont(chemin, recalcTimestamp=False)  # même date à chaque génération : fichiers identiques
+        f = TTFont(source(chemin, "polices/" + chemin.name), recalcTimestamp=False)  # même date à chaque génération : fichiers identiques
         if axes:
             f = instancer.instantiateVariableFont(f, axes)
         b = io.BytesIO()
@@ -358,58 +376,97 @@ def puce(svg, x, y, txt, fam="JaCode", taille=13, couleur=None, fond=None, bord=
 
 
 # ---------------------------------------------------------------- contenu (CV, voz.md et dépôts : rien d'inventé)
-PHRASES = ["I build tools that make life simpler.", "Je crée des outils qui simplifient la vie."]
+# Chaque bloc a UN rôle : en-tête = qui + accroche ; fiche = ce qui n'est nulle part ailleurs
+# + chiffres vivants ; parcours = le passé ; projets = ce que j'ai fait + l'appel (stage).
+PHRASE = "I build tools that make life simpler."
 
-EN_CE_MOMENT = ["3rd year of BUT Informatique", "Building JustSAE",
-                "An AI agent for home automation", "Speaks ES · FR · EN (B2)"]
-
-PARCOURS = [  # (année, titre, sous-titre) — dates du CV
+PARCOURS = [  # (année, titre, sous-titre) — dates du CV ; le stage 2027 est dans la carte « Your team? »
     ("2017", "CUJAE, Havana", "Telecommunications & Electronics Engineering"),
     ("2018", "Cristallerie de Saint-Louis", "Automation internship · Hermès Group"),
     ("2021", "PRINTJAS, Havana", "Founded my printing & phone repair business"),
     ("2024", "IUT de Bayonne", "BUT Informatique · Computer Science"),
     ("2025", "CROUS, Anglet", "Student referent"),
     ("2026", "Madaré, Toulouse", "Web developer internship · built AuthMIA"),
-    ("2027", "Your team?", "Development internship · 01/03 → 18/06"),
 ]
 
-PROJETS = [  # (fichier, étiquette, titre, description, technos, lien)
+PROJETS = [  # (fichier, étiquette, titre, description, technos, lien, dépôt public ou None)
     ("justsae", "PERSONAL PROJECT · LIVE", "JustSAE",
      "App to organize and track team projects: planning, Gantt charts and mind maps.",
-     ["React", "Express", "Prisma", "PostgreSQL"], "https://justsae.cloud"),
+     ["React", "Express", "Prisma", "PostgreSQL"], "https://justsae.cloud", None),
     ("paaxio", "IUT TEAM PROJECT · 7 STUDENTS", "Paaxio",
      "Music platform where new artists can get discovered without competing with big names.",
-     ["PHP", "Twig", "JavaScript", "SCSS"], f"https://github.com/{UTILISATEUR}/SAEPaaxio"),
+     ["PHP", "Twig", "JavaScript", "SCSS"], f"https://github.com/{UTILISATEUR}/SAEPaaxio", "SAEPaaxio"),
     ("authmia", "INTERNSHIP · MADARÉ, TOULOUSE", "AuthMIA",
      "Automates internal processes and checks production pages against their mockups.",
-     ["Private code"], None),
+     ["Private code"], None, None),
     ("pokebagarre", "IUT LAB · SOFTWARE QUALITY", "PokeBagarre",
      "Java app used for software quality lab work, with unit tests.",
-     ["Java", "Gradle"], f"https://github.com/{UTILISATEUR}/PokeBagarre_IUT"),
+     ["Java", "Gradle"], f"https://github.com/{UTILISATEUR}/PokeBagarre_IUT", "PokeBagarre_IUT"),
     ("lecteurcd", "IUT PROJECT · DESKTOP APP", "CD player",
      "Desktop CD player interface: play, next and previous, shuffle, repeat and volume.",
-     ["C++", "Qt"], f"https://github.com/{UTILISATEUR}/SAE-Qt"),
+     ["C++", "Qt"], f"https://github.com/{UTILISATEUR}/SAE-Qt", "SAE-Qt"),
 ]
 LINKEDIN = "https://www.linkedin.com/in/christopher-cecilia-urra-26a78722a/"
 
-FICHE = [  # (icône Nerd Font, clé, valeur) — mêmes infos que l'ancienne liste « About me »
+FICHE_FIXE = [  # (icône Nerd Font, clé, valeur) — sans ce qui est déjà dans le parcours ou l'en-tête
     ("\U000f0474", "study", "BUT Informatique, 3rd year · IUT de Bayonne"),
-    ("\U000f1119", "degree", "Telecom & Electronics Engineering · CUJAE"),
     ("\U000f099d", "into", "Cybersecurity · automating everything I can"),
-    ("\U000f04dc", "founded", "PRINTJAS, Havana · printing & phone repair"),
     ("\U000f03d8", "custom", "Everything: my Linux/Windows PC, my own brand"),
     ("\uee32", "music", "Drums & vocals · CROUS student band"),
     ("\U000f05ca", "speaks", "Spanish (native) · French (fluent) · English (B2)"),
-    ("\U000f00d6", "seeking", "Dev internship · 01/03 → 18/06/2027"),
 ]
 PALETTE = ["#1A1917", "#F2A04C", "#D9BC6A", "#EAE8DC", "#74AFC0"]  # couleurs de la marque
 
-SECTIONS = {  # numéro, titre EN, titre FR
-    "apropos": ("01", "About me", "À PROPOS"),
-    "parcours": ("02", "Journey", "PARCOURS"),
-    "projets": ("03", "Projects", "PROJETS"),
-    "technos": ("04", "Tech stack", "COMPÉTENCES TECHNIQUES"),
-}
+SECTIONS = {"apropos": ("01", "About me"), "parcours": ("02", "Journey"),
+            "projets": ("03", "Projects"), "technos": ("04", "Tech stack")}
+
+
+def vivant():
+    """Données publiques écrites par outils/actualiser.py (vide si le fichier n'existe pas)."""
+    f = OUTILS / "donnees/vivant.json"
+    return json.loads(f.read_text()) if f.exists() else {}
+
+
+def il_y_a(date, ref):
+    """« today », « 3 days ago », « 2 months ago »… calculé à la date des données (reproductible)."""
+    j = (dt.date.fromisoformat(ref) - dt.date.fromisoformat(date)).days
+    if j <= 0:
+        return "today"
+    if j == 1:
+        return "yesterday"
+    if j < 14:
+        return f"{j} days ago"
+    if j < 60:
+        return f"{j // 7} weeks ago"
+    if j < 365:
+        return f"{j // 30} months ago"
+    return "over a year ago"
+
+
+def fiche_lignes(v):
+    lignes = list(FICHE_FIXE)
+    if v.get("depots_publics") is not None:
+        lignes.append(("\U000f02a2", "code", f"{v['depots_publics']} public repos · "
+                       f"{v['commits_annee']} commits in {v['date'][:4]}"))
+    if v.get("langages"):
+        lignes.append(("\U000f0169", "langs", " · ".join(f"{n} {p}%" for n, p in v["langages"])))
+    return lignes
+
+
+def en_ce_moment(v):
+    """Carte « This week » : ce que je construis + le dépôt public de la semaine + ma musique."""
+    lignes = [("\U000f06a9", "Building an AI agent for home automation")]
+    if v.get("semaine"):
+        depot, n = v["semaine"]
+        lignes.append(("\U000f02a2", f"Most commits: {depot} ({n})"))
+    elif v.get("dernier"):
+        depot, date = v["dernier"]
+        lignes.append(("\U000f02a2", f"Last commit: {depot}, {il_y_a(date, v['date'])}"))
+    if v.get("musique"):
+        m = v["musique"]
+        lignes.append(("\U000f04c7", f"On repeat: {m['titre']} · {m['artiste']}"))
+    return lignes
+
 
 TECHNOS = [  # groupes : (titre, [(nom, logo simple-icons)]) — compétences techniques du CV
     ("WEB", [("PHP", "php"), ("Laravel", "laravel"), ("Angular", "angular"), ("React", "react"),
@@ -420,114 +477,71 @@ TECHNOS = [  # groupes : (titre, [(nom, logo simple-icons)]) — compétences te
 
 
 # ---------------------------------------------------------------- pièces
-def entete(theme):
-    s = Svg(1000, 340, theme, "Christopher Cecilia Urra — I build tools that make life simpler. "
-            "Je crée des outils qui simplifient la vie.")
+def entete(theme, v):
+    """Qui je suis + l'accroche : nom, phrase, une seule étiquette (stage) et la carte « This week »."""
+    s = Svg(1000, 300, theme, f"Christopher Cecilia Urra — {PHRASE}")
     th = s.th
     s.scene(komorebi_x=.95)
     s.veta(11, 640, -8, 1012, 150, 3.0, ramas=2, longueur_rama=80, delai=.2, duree=2.0, periode=9,
            delai_reflet=2.4, amplitude=20)
     c = s.corps
-    c.append(s.texte(48, 74, "HELLO, I'M · BONJOUR, JE SUIS", "JaCodeM", 13, th["oro"], espacement=2.6))
+    c.append(s.texte(48, 74, "HELLO, I'M", "JaCodeM", 13, th["oro"], espacement=2.6))
     c.append(s.texte(46, 132, "Christopher Cecilia Urra", "JaTitre", 50, th["texte"]))
-    # phrase tapée, en alternance anglais / français (SMIL : marche aussi dans une image)
-    x0, y0, taille = 48, 196, 20
-    cw = mesure("a", "JaCode", taille)
-    xt = x0 + cw * 2
-    duree, pas_t, pas_e = 15.0, .055, .022
-    t, temps = .6, []
-    for i, p in enumerate(PHRASES):
-        n = len(p)
-        debut = t
-        t_fin_frappe = debut + n * pas_t
-        t_fin_pause = t_fin_frappe + 3.2
-        t_fin_efface = t_fin_pause + n * pas_e
-        temps.append((debut, n, t_fin_frappe, t_fin_pause, t_fin_efface))
-        t = t_fin_efface + .5
-    duree = max(duree, t)
-
-    def anim_largeur(i):
-        debut, n, ff, fp, fe = temps[i]
-        pts = [(0, 0), (debut, 0)]
-        pts += [(debut + k * pas_t, k * cw) for k in range(1, n + 1)]
-        pts += [(fp + k * pas_e, (n - k) * cw) for k in range(1, n + 1)]
-        return pts
-
-    def smil(attr, pts, base=0.0):
-        pts = sorted(pts)
-        temps_ = [0.0] + [p[0] / duree for p in pts if 0 < p[0] < duree] + [1.0]
-        vals, j = [], 0
-        for tt in temps_:
-            v = 0
-            for p in pts:
-                if p[0] / duree <= tt + 1e-9:
-                    v = p[1]
-            vals.append(base + v)
-        return (f'<animate attributeName="{attr}" dur="{duree:.2f}s" repeatCount="indefinite" calcMode="discrete" '
-                f'keyTimes="{";".join(f"{k:.4f}" for k in temps_)}" values="{";".join(f"{v:.1f}" for v in vals)}"/>')
-    anime = ['<g class="anime">']
-    for i, p in enumerate(PHRASES):
-        idc = s.id("tp")
-        s.defs.append(f'<clipPath id="{idc}"><rect x="{xt:.1f}" y="{y0 - 26}" width="0" height="36">{smil("width", anim_largeur(i))}</rect></clipPath>')
-        anime.append(f'<g clip-path="url(#{idc})">' + s.texte(xt, y0, p, "JaCode", taille, th["texte"]) + "</g>")
-    curseur_pts = anim_largeur(0) + [q for q in anim_largeur(1) if q[0] > temps[0][4]]
-    s.css.append("@keyframes clignote{0%,49%{opacity:1}50%,100%{opacity:0}}.curseur{animation:clignote 1.05s steps(1) infinite}")
-    anime.append(f'<rect class="curseur" x="{xt:.1f}" y="{y0 - 17}" width="{cw * .55:.1f}" height="22" rx="1.5" fill="{th["firma"]}">'
-                 f'{smil("x", curseur_pts, base=xt)}</rect></g>')
-    c.append(s.texte(x0, y0, ">", "JaCodeM", taille, th["oro"]))
-    c.extend(anime)
-    c.append(f'<g class="fixe" style="display:none">{s.texte(xt, y0, PHRASES[0], "JaCode", taille, th["texte"])}</g>')
-    # étiquettes
-    x, y = 48, 248
-    frag, l = puce(s, x, y, "Anglet, France", icone_l=18)
-    c.append(frag)
-    c.append(f'<path transform="translate({x + 21} {y + 15}) scale(.95)" fill="{th["oro"]}" fill-rule="evenodd" '
-             'd="M0-8C-4.2-8-6.5-5-6.5-1.6C-6.5 2.6 0 8.5 0 8.5S6.5 2.6 6.5-1.6C6.5-5 4.2-8 0-8ZM0-4.2A2.4 2.4 0 1 1 0 .6A2.4 2.4 0 1 1 0-4.2Z"/>')
-    x += l + 10
-    frag, l = puce(s, x, y, "Open to a dev internship · 01/03 → 18/06/2027", icone_l=18,
-                   bord=th["bord_fort"], fond=f'rgb({th["komorebi"][0]} / .06)' if theme == "sombre" else "rgb(242 160 76 / .08)")
+    c.append(s.texte(48, 176, PHRASE, "JaTexte", 22, th["doux"]))
+    # une seule étiquette : le stage (les dates exactes sont dans la carte « Your team? »)
+    x, y = 48, 226
+    frag, l = puce(s, x, y, "Open to a dev internship · 2027", icone_l=18, bord=th["bord_fort"],
+                   fond=f'rgb({th["komorebi"][0]} / .06)' if theme == "sombre" else "rgb(242 160 76 / .08)")
     c.append(frag)
     s.css.append("@keyframes pouls{0%{transform:scale(1);opacity:.75}100%{transform:scale(3);opacity:0}}"
                  ".pouls{transform-box:fill-box;transform-origin:center;animation:pouls 2.4s ease-out infinite}")
     c.append(f'<circle class="pouls" cx="{x + 22}" cy="{y + 15}" r="4" fill="{th["bien"]}"/><circle cx="{x + 22}" cy="{y + 15}" r="4" fill="{th["bien"]}"/>')
-    # carte « en ce moment »
-    cx, cy, cl, ch = 636, 168, 316, 140
+    # carte « This week » : mise à jour chaque jour par l'Action
+    lignes = en_ce_moment(v)
+    cx, cl = 580, 372
+    ch = 52 + len(lignes) * 27
+    cy = 250 - ch
     c.append(f'<rect x="{cx}" y="{cy}" width="{cl}" height="{ch}" rx="18" fill="{th["vidrio"]}" stroke="{th["bord"]}"/>')
-    c.append(s.texte(cx + 22, cy + 30, "NOW · EN CE MOMENT", "JaCodeM", 11.5, th["oro"], espacement=2.2))
-    for i, ligne in enumerate(EN_CE_MOMENT):
-        yy = cy + 58 + i * 23
-        c.append(f'<path transform="translate({cx + 26} {yy - 5})" d="M0-3.6L3.6 0L0 3.6L-3.6 0Z" fill="{th["firma"]}"/>')
-        c.append(s.texte(cx + 40, yy, ligne, "JaTexte", 16, th["texte"]))
+    c.append(s.texte(cx + 22, cy + 30, "THIS WEEK", "JaCodeM", 11.5, th["oro"], espacement=2.2))
+    for i, (icone, txt) in enumerate(lignes):
+        yy = cy + 60 + i * 27
+        txt = couper(txt, "JaTexte", 16, cl - 66)[0] if mesure(txt, "JaTexte", 16) > cl - 66 else txt
+        c.append(s.texte(cx + 20, yy + 1, icone, "JaCode", 17, th["az"]))
+        c.append(s.texte(cx + 46, yy, txt, "JaTexte", 16, th["texte"]))
     s.fin_scene()
     return s.rendu()
 
 
 def titre_section(cle, theme):
-    num, en, fr = SECTIONS[cle]
-    s = Svg(1000, 92, theme, f"{en} · {fr.capitalize()}")
+    """Numéro + titre + filet fin : la veta est réservée à l'en-tête, au parcours et au pied."""
+    num, en = SECTIONS[cle]
+    s = Svg(1000, 84, theme, en)
     th, c = s.th, s.corps
     c.append(s.texte(2, 52, num, "JaCodeM", 15, th["oro"], espacement=1.5))
     c.append(s.texte(38, 54, en, "JaTitreM", 32, th["texte"]))
     l = mesure(en, "JaTitreM", 32)
-    c.append(s.texte(38 + l + 16, 52, fr, "JaCodeM", 12.5, th["doux"], espacement=2.4))
-    graine = {"apropos": 3, "parcours": 5, "projets": 7, "technos": 9}[cle]
-    s.veta(graine, 2, 74, 998, 74, 1.5, ramas=1, longueur_rama=30, duree=1.6, periode=10,
-           delai_reflet=1.8 + graine * .3, amplitude=4)
+    c.append(f'<line x1="{38 + l + 20:.1f}" y1="44" x2="998" y2="44" stroke="{th["bord"]}" stroke-width="1"/>')
     return s.rendu()
 
 
 def parcours(theme):
     s = Svg(1000, 320, theme, "Journey: " + " · ".join(f"{a} {t} ({st})" for a, t, st in PARCOURS))
     th, c = s.th, s.corps
-    pts = s.veta(21, 14, 150, 986, 150, 2.6, ramas=2, longueur_rama=40, duree=2.6, periode=9, delai_reflet=3,
+    pts = s.veta(21, 14, 150, 930, 150, 2.6, ramas=2, longueur_rama=40, duree=2.6, periode=9, delai_reflet=3,
                  amplitude=7)
+    # la suite reste ouverte : pointillés + chevron, sans texte (l'appel est dans « Your team? »)
+    yf = pts[-1][1]
+    c.append(f'<g class="suite"><line x1="940" y1="{yf:.1f}" x2="978" y2="{yf:.1f}" stroke="{th["oro"]}" '
+             f'stroke-width="2" stroke-dasharray="3 5" stroke-linecap="round"/>'
+             f'<path d="M974 {yf - 7:.1f}L984 {yf:.1f}L974 {yf + 7:.1f}" fill="none" stroke="{th["oro"]}" '
+             f'stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g>')
+    s.css.append(f"@keyframes suite{{from{{opacity:0}}to{{opacity:1}}}}.suite{{animation:suite 1s {COURBE} 2.6s both}}")
     n = len(PARCOURS)
     s.css.append("@keyframes jalon{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}")
     for i, (annee, titre, sous) in enumerate(PARCOURS):
-        x = 76 + i * (848 / (n - 1))
+        x = 100 + i * (770 / (n - 1))
         y = y_sur(pts, x)
-        dernier = i == n - 1
-        coul = th["ac"] if dernier else th["firma"]
+        coul = th["firma"]
         haut = i % 2 == 0
         idc = s.id("j")
         s.css.append(f".{idc}{{animation:jalon .9s {COURBE} {.5 + i * .3:.2f}s both}}")
@@ -547,27 +561,25 @@ def parcours(theme):
             g.append(s.texte(x, base + 24, titre, "JaTexteG", 17, th["texte"], "middle"))
             for k, li in enumerate(lignes):
                 g.append(s.texte(x, base + 46 + k * 19, li, "JaTexte", 15, th["doux"], "middle"))
-        if dernier:
-            g.append(f'<circle class="pouls" cx="{x:.1f}" cy="{y:.1f}" r="7" fill="{coul}"/>')
         g.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="12" fill="{th["fond"]}" stroke="{coul}" stroke-opacity=".55"/>')
         g.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="6" fill="{coul}" style="filter:drop-shadow(0 0 4px {coul})"/>')
         g.append("</g>")
         c.extend(g)
-    s.css.append("@keyframes pouls{0%{transform:scale(1);opacity:.7}100%{transform:scale(3.2);opacity:0}}"
-                 ".pouls{transform-box:fill-box;transform-origin:center;animation:pouls 2.4s ease-out 3s infinite}")
     return s.rendu()
 
 
-def carte(projet, theme, indice):
-    fichier, etiquette, titre, desc, technos, lien = projet
+def carte(projet, theme, v):
+    """Carte de projet, sans veta ; « updated … » vient du dépôt public (si il y en a un)."""
+    fichier, etiquette, titre, desc, technos, lien, depot = projet
+    maj = v.get("pousse", {}).get(depot) if depot else None
     s = Svg(500, 260, theme, f"{titre} — {desc} ({', '.join(technos)})")
     th, c = s.th, s.corps
     s.scene(rayon=20, komorebi_x=1.0, intensite=.8)
-    s.veta(31 + indice * 17, 330, -6, 506, 96, 1.9, ramas=1, longueur_rama=36, duree=1.6,
-           periode=11, delai_reflet=2 + indice * 1.3, opacite=.9, amplitude=9)
     c.append(s.texte(28, 44, etiquette, "JaCodeM", 11.5, th["oro"], espacement=2.2))
     if lien:
         c.append(f'<path transform="translate(458 30)" d="M0 12L12 0M3 0H12V9" fill="none" stroke="{th["doux"]}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>')
+    if maj:
+        c.append(s.texte(472, 92, f"updated {il_y_a(maj, v['date'])}", "JaCode", 12, th["doux"], "end"))
     c.append(s.texte(27, 92, titre, "JaTitreM", 32, th["texte"]))
     for k, li in enumerate(couper(desc, "JaTexte", 17.5, 440)[:3]):
         c.append(s.texte(28, 126 + k * 24, li, "JaTexte", 17.5, th["doux"]))
@@ -581,15 +593,11 @@ def carte(projet, theme, indice):
 
 
 def carte_appel(theme):
-    s = Svg(500, 260, theme, "Your team? I'm looking for a development internship from March 1 to June 18, 2027. "
-            "Je recherche un stage en développement du 1er mars au 18 juin 2027.")
+    s = Svg(500, 260, theme, "Your team? I'm looking for a development internship from March 1 to June 18, 2027.")
     th, c = s.th, s.corps
     s.scene(rayon=20, komorebi_x=1.0, intensite=1.6)
-    s.veta(97, 330, -6, 506, 96, 2.2, ramas=1, longueur_rama=36, duree=1.6, periode=9, delai_reflet=3.5, amplitude=9)
     c.append(s.texte(28, 44, "NEXT · 2027", "JaCodeM", 11.5, th["ac"], espacement=2.2))
     c.append(s.texte(27, 92, "Your team?", "JaTitreM", 32, th["texte"]))
-    l = mesure("Your team?", "JaTitreM", 32)
-    c.append(s.texte(27 + l + 12, 92, "Votre équipe ?", "JaTitreM", 22, th["doux"]))
     lignes = ["I'm looking for a development internship", "from March 1 to June 18, 2027."]
     for k, li in enumerate(lignes):
         c.append(s.texte(28, 126 + k * 24, li, "JaTexte", 17.5, th["doux"]))
@@ -604,7 +612,8 @@ def carte_appel(theme):
 def embleme_colore(couleur, taille):
     """Emblème officiel d'une couleur (PNG avec transparence) recoloré, en data URI."""
     from PIL import Image
-    im = Image.open(IDENTITE / "logo/aplicado/emblema_un_color_crema.png").convert("RGBA")
+    im = Image.open(source(IDENTITE / "logo/aplicado/emblema_un_color_crema.png",
+                           "medias/emblema_un_color_crema.png")).convert("RGBA")
     im = im.crop(im.getbbox()).resize((taille, taille), Image.LANCZOS)
     plein = Image.new("RGBA", im.size, couleur)
     plein.putalpha(im.split()[3])
@@ -613,9 +622,10 @@ def embleme_colore(couleur, taille):
     return "data:image/png;base64," + base64.b64encode(b.getvalue()).decode()
 
 
-def fiche(theme):
+def fiche(theme, v):
     """« About me » façon fastfetch : mon invite Starship, l'emblème et des lignes clé / valeur."""
-    alt = "christopher@justasync — " + " · ".join(f"{k}: {v}" for _, k, v in FICHE)
+    lignes = fiche_lignes(v)
+    alt = "christopher@justasync — " + " · ".join(f"{k}: {val}" for _, k, val in lignes)
     s = Svg(1000, 430, theme, alt)
     th, c = s.th, s.corps
     s.scene(komorebi_x=.05, intensite=.8)
@@ -633,17 +643,16 @@ def fiche(theme):
     xp = x + l1 + l2 + 12
     c.append(s.texte(xp, y + 20, "\u276f", "JaCodeM", 17, th["ac"]))
     c.append(s.texte(xp + 22, y + 19.5, "fastfetch", "JaCode", 16, th["texte"]))
-    # titre + veta
+    # titre + ligne de tirets, comme le vrai fastfetch
     c.append(s.texte(x, 112, "christopher", "JaCodeM", 22, th["oro"]))
     lt = mesure("christopher", "JaCodeM", 22)
     c.append(s.texte(x + lt, 112, "@", "JaCodeM", 22, th["doux"]))
     c.append(s.texte(x + lt + mesure("@", "JaCodeM", 22), 112, "justasync", "JaCodeM", 22, th["oro"]))
-    s.veta(61, x, 130, 952, 130, 1.4, ramas=0, delai=.5, duree=1.4, periode=10,
-           delai_reflet=2.2, amplitude=2)
+    c.append(s.texte(x, 138, "-" * len("christopher@justasync"), "JaCodeM", 22, th["doux"]))
     # lignes clé / valeur, qui s'affichent l'une après l'autre
     s.css.append("@keyframes ligne{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:none}}")
-    for i, (icone, cle, valeur) in enumerate(FICHE):
-        yy = 164 + i * 28.5
+    for i, (icone, cle, valeur) in enumerate(lignes):
+        yy = 172 + i * 28.5
         idl = s.id("l")
         s.css.append(f".{idl}{{animation:ligne .5s {COURBE} {.9 + i * .12:.2f}s both}}")
         c.append(f'<g class="{idl}">' + s.texte(x - 1, yy + 2, icone, "JaCode", 21, th["az"])
@@ -651,7 +660,7 @@ def fiche(theme):
                  + s.texte(x + 120, yy, valeur, "JaCode", 15, th["texte"]) + "</g>")
     # palette, comme le module « colors » de fastfetch
     idp = s.id("l")
-    s.css.append(f".{idp}{{animation:ligne .5s {COURBE} {.9 + len(FICHE) * .12:.2f}s both}}")
+    s.css.append(f".{idp}{{animation:ligne .5s {COURBE} {.9 + len(lignes) * .12:.2f}s both}}")
     pastilles = "".join(f'<circle cx="{x + 9 + k * 26}" cy="400" r="8" fill="{coul}" stroke="{th["bord"]}"/>'
                         for k, coul in enumerate(PALETTE))
     c.append(f'<g class="{idp}">{pastilles}</g>')
@@ -660,30 +669,18 @@ def fiche(theme):
 
 
 def pied(theme):
-    s = Svg(1000, 210, theme, "Justasync — Christopher Cecilia Urra · Anglet, France")
+    """Une veta qui traverse, puis le nom (l'emblème est dans la fiche)."""
+    s = Svg(1000, 150, theme, "Justasync — Christopher Cecilia Urra · Anglet, France")
     th, c = s.th, s.corps
-    s.veta(41, 0, 96, 466, 92, 1.9, ramas=2, longueur_rama=40, duree=1.6, periode=10, delai_reflet=2, amplitude=7)
-    s.veta(43, 1000, 88, 534, 92, 1.9, ramas=2, longueur_rama=40, duree=1.6, periode=10, delai_reflet=2.6, amplitude=7)
-    idh = s.id("ha")
-    s.defs.append(f'<radialGradient id="{idh}"><stop offset="0" stop-color="{th["firma"]}" stop-opacity=".22"/>'
-                  f'<stop offset="1" stop-color="{th["firma"]}" stop-opacity="0"/></radialGradient>')
-    c.append(f'<circle cx="500" cy="92" r="84" fill="url(#{idh})"/>')
-    nom = "emblema_un_color_crema.png" if theme == "sombre" else "emblema_un_color_grafito.png"
-    from PIL import Image
-    im = Image.open(IDENTITE / "logo/aplicado" / nom)
-    im = im.crop(im.getbbox()).resize((192, 192), Image.LANCZOS)
-    b = io.BytesIO()
-    im.save(b, "PNG", optimize=True)
-    donnees = base64.b64encode(b.getvalue()).decode()
-    c.append(f'<image x="468" y="60" width="64" height="64" href="data:image/png;base64,{donnees}"/>')
-    c.append(s.texte(500, 162, "Justasync", "JaTitreM", 24, th["texte"], "middle"))
-    c.append(s.texte(500, 188, "CHRISTOPHER CECILIA URRA · ANGLET, FRANCE", "JaCodeM", 11.5, th["doux"], "middle", 2.2))
+    s.veta(41, 0, 40, 1000, 40, 1.9, ramas=3, longueur_rama=40, duree=2.0, periode=10, delai_reflet=2, amplitude=7)
+    c.append(s.texte(500, 104, "Justasync", "JaTitreM", 24, th["texte"], "middle"))
+    c.append(s.texte(500, 130, "CHRISTOPHER CECILIA URRA · ANGLET, FRANCE", "JaCodeM", 11.5, th["doux"], "middle", 2.2))
     return s.rendu()
 
 
 # ---------------------------------------------------------------- README
 def lire_voz():
-    v = (IDENTITE / "voz.md").read_text()
+    v = source(IDENTITE / "voz.md", "textes/voz.md").read_text()
 
     def paragraphe(section):
         bloc = v.split("## " + section)[1]
@@ -712,14 +709,15 @@ def main():
         for theme in THEMES:
             versions[f"{nom}-{theme}"] = ecrire(f"{nom}-{theme}.svg", fonction(*a, theme) if a else fonction(theme))
 
-    pieces("entete", entete)
+    v = vivant()
+    pieces("entete", lambda th: entete(th, v))
     for cle in SECTIONS:
         pieces(f"titre-{cle}", lambda th, cle=cle: titre_section(cle, th))
     pieces("parcours", parcours)
-    for i, p in enumerate(PROJETS):
-        pieces(f"projet-{p[0]}", lambda th, p=p, i=i: carte(p, th, i))
+    for p in PROJETS:
+        pieces(f"projet-{p[0]}", lambda th, p=p: carte(p, th, v))
     pieces("projet-suivant", carte_appel)
-    pieces("fiche", fiche)
+    pieces("fiche", lambda th: fiche(th, v))
     pieces("pied", pied)
 
     def image(nom, alt, largeur="100%"):
@@ -729,8 +727,7 @@ def main():
                 f'<img src="{u("sombre")}" alt="{esc(alt)}" width="{largeur}"></picture>')
 
     def titre(cle):
-        num, en, fr = SECTIONS[cle]
-        return f'<p>{image(f"titre-{cle}", f"{en} · {fr.capitalize()}")}</p>'
+        return f'<p>{image(f"titre-{cle}", SECTIONS[cle][1])}</p>'
 
     def badge(nom, logo, theme):
         n = nom.replace("-", "--").replace(" ", "%20").replace("+", "%2B")
@@ -770,11 +767,11 @@ def main():
     readme = f"""<!-- Généré par outils/generer.py : modifier le script, pas ce fichier. -->
 <p align="center"><img src="{brut}/banner.png" alt="Justasync" width="100%"></p>
 
-<p>{image("entete", "Christopher Cecilia Urra — I build tools that make life simpler. Je crée des outils qui simplifient la vie.")}</p>
+<p>{image("entete", f"Christopher Cecilia Urra — {PHRASE}")}</p>
 
 {titre("apropos")}
 
-<p>{image("fiche", "christopher@justasync — " + " · ".join(f"{k}: {v}" for _, k, v in FICHE))}</p>
+<p>{image("fiche", "christopher@justasync — " + " · ".join(f"{k}: {val}" for _, k, val in fiche_lignes(v)))}</p>
 
 <details>
 <summary><b>Read my full story</b></summary>

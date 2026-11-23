@@ -1,0 +1,36 @@
+{
+  "date": "2026-11-23",
+  "depots_publics": 4,
+  "commits_annee": 22,
+  "langages": [
+    [
+      "JavaScript",
+      39
+    ],
+    [
+      "PHP",
+      24
+    ],
+    [
+      "Twig",
+      23
+    ],
+    [
+      "CSS",
+      4
+    ]
+  ],
+  "semaine": null,
+  "dernier": [
+    "SAEPaaxio",
+    "2026-03-03"
+  ],
+  "pousse": {
+    "Justasync": "2026-11-19",
+    "Le_coin_des_nostalgie": "2025-10-15",
+    "PokeBagarre_IUT": "2026-03-01",
+    "SAE-Qt": "2025-05-15",
+    "SAEPaaxio": "2026-05-21"
+  },
+  "musique": null
+}
