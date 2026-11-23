@@ -446,8 +446,9 @@ def il_y_a(date, ref):
 def fiche_lignes(v):
     lignes = list(FICHE_FIXE)
     if v.get("depots_publics") is not None:
-        lignes.append(("\U000f02a2", "code", f"{v['depots_publics']} public repos · "
-                       f"{v['commits_annee']} commits in {v['date'][:4]}"))
+        n = (f"{v['contrib_annee']} contributions" if v.get("contrib_annee") is not None
+             else f"{v['commits_annee']} commits")  # contributions = privées comprises (anonymes)
+        lignes.append(("\U000f02a2", "code", f"{v['depots_publics']} public repos · {n} in {v['date'][:4]}"))
     if v.get("langages"):
         lignes.append(("\U000f0169", "langs", " · ".join(f"{n} {p}%" for n, p in v["langages"])))
     return lignes
@@ -456,7 +457,11 @@ def fiche_lignes(v):
 def en_ce_moment(v):
     """Carte « This week » : ce que je construis + le dépôt public de la semaine + ma musique."""
     lignes = [("\U000f06a9", "Building an AI agent for home automation")]
-    if v.get("semaine"):
+    if v.get("contrib_semaine"):
+        n = v["contrib_semaine"]
+        ou = f"most public ones in {v['semaine'][0]}" if v.get("semaine") else "in private repos"
+        lignes.append(("\U000f02a2", f"{n} contribution{'s' if n > 1 else ''} · {ou}"))
+    elif v.get("semaine"):
         depot, n = v["semaine"]
         lignes.append(("\U000f02a2", f"Most commits: {depot} ({n})"))
     elif v.get("dernier"):

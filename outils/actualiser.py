@@ -44,6 +44,18 @@ def commits(depuis):
         page += 1
 
 
+def contributions(debut, fin):
+    """Total du calendrier de contributions (privées comprises, anonymes : aucun nom de dépôt).
+    Les contributions privées ne comptent que si « Include private contributions » est activé."""
+    requete = ("query($u:String!,$d:DateTime!,$f:DateTime!){user(login:$u){contributionsCollection(from:$d,to:$f)"
+               "{contributionCalendar{totalContributions}}}}")
+    corps = json.dumps({"query": requete, "variables": {"u": UTILISATEUR, "d": f"{debut}T00:00:00Z",
+                                                        "f": f"{fin}T23:59:59Z"}}).encode()
+    entetes = {"User-Agent": "profil-readme", "Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}"}
+    with urllib.request.urlopen(urllib.request.Request("https://api.github.com/graphql", corps, entetes), timeout=30) as r:
+        return json.load(r)["data"]["user"]["contributionsCollection"]["contributionCalendar"]["totalContributions"]
+
+
 def github(aujourdhui):
     depots = [d for d in api(f"https://api.github.com/users/{UTILISATEUR}/repos?type=owner&per_page=100")
               if not d["private"] and not d["fork"]]
@@ -60,6 +72,11 @@ def github(aujourdhui):
     recent = max(de_lannee, key=lambda c: c["commit"]["committer"]["date"], default=None)
     actifs = Counter(c["repository"]["name"] for c in commits((aujourdhui - dt.timedelta(days=7)).isoformat()))
     semaine_top = list(actifs.most_common(1)[0]) if actifs else None
+    # l'API GraphQL exige un jeton : sans jeton (en local), ces deux chiffres restent absents
+    contrib = {}
+    if os.environ.get("GITHUB_TOKEN"):
+        contrib = {"contrib_annee": contributions(f"{aujourdhui.year}-01-01", aujourdhui),
+                   "contrib_semaine": contributions(aujourdhui - dt.timedelta(days=6), aujourdhui)}
     return {
         "depots_publics": len([d for d in depots if d["full_name"] != DEPOT_PROFIL]),
         "commits_annee": annee,
@@ -67,6 +84,7 @@ def github(aujourdhui):
         "semaine": semaine_top,  # [dépôt, nombre de commits] ou null
         "dernier": [recent["repository"]["name"], recent["commit"]["committer"]["date"][:10]] if recent else None,
         "pousse": {d["name"]: d["pushed_at"][:10] for d in depots},  # dernière mise à jour de chaque dépôt
+        **contrib,
     }
 
 
