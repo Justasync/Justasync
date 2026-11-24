@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-23",
+  "date": "2026-11-24",
   "depots_publics": 4,
   "commits_annee": 22,
   "langages": [
@@ -32,7 +32,11 @@
     "SAE-Qt": "2025-05-15",
     "SAEPaaxio": "2026-05-21"
   },
-  "contrib_annee": 436,
-  "contrib_semaine": 2,
-  "musique": null
+  "contrib_annee": 446,
+  "contrib_semaine": 12,
+  "musique": {
+    "titre": "Don't Forget To Love Yourself",
+    "artiste": "Hakyhm",
+    "ecoutes": 3
+  }
 }
