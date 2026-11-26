@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-25",
+  "date": "2026-11-26",
   "depots_publics": 4,
   "commits_annee": 22,
   "langages": [
@@ -26,14 +26,14 @@
     "2026-03-03"
   ],
   "pousse": {
-    "Justasync": "2026-11-24",
+    "Justasync": "2026-11-25",
     "Le_coin_des_nostalgie": "2025-10-15",
     "PokeBagarre_IUT": "2026-03-01",
     "SAE-Qt": "2025-05-15",
     "SAEPaaxio": "2026-05-21"
   },
   "contrib_annee": 446,
-  "contrib_semaine": 6,
+  "contrib_semaine": 4,
   "musique": {
     "titre": "Don't Forget To Love Yourself",
     "artiste": "Hakyhm",
