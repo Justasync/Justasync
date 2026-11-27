@@ -1,7 +1,7 @@
 <!-- Généré par outils/generer.py : modifier le script, pas ce fichier. -->
 <p align="center"><img src="https://raw.githubusercontent.com/Justasync/Justasync/main/assets/banner.png" alt="Justasync" width="100%"></p>
 
-<p><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/main/assets/entete-sombre.svg?v=f1af6042"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/main/assets/entete-clair.svg?v=815b8b05"><img src="https://raw.githubusercontent.com/Justasync/Justasync/main/assets/entete-sombre.svg?v=f1af6042" alt="Christopher Cecilia Urra — I build tools that make life simpler." width="100%"></picture></p>
+<p><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/main/assets/entete-sombre.svg?v=cf877a1a"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/main/assets/entete-clair.svg?v=98688315"><img src="https://raw.githubusercontent.com/Justasync/Justasync/main/assets/entete-sombre.svg?v=cf877a1a" alt="Christopher Cecilia Urra — I build tools that make life simpler." width="100%"></picture></p>
 
 <p><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/main/assets/titre-apropos-sombre.svg?v=eb61b6a7"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Justasync/Justasync/main/assets/titre-apropos-clair.svg?v=369408bf"><img src="https://raw.githubusercontent.com/Justasync/Justasync/main/assets/titre-apropos-sombre.svg?v=eb61b6a7" alt="About me" width="100%"></picture></p>
 
